@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Test Your Photography Knowledge</title>
+	<link rel="stylesheet" href="styles.css">
+	<link href='https://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Vidaloka" rel="stylesheet">
+
+</head>
+<body class="body-background">
+	<h1>Test your Photography Knowledge</h1>
+	<button class="start-button">Start Test</button>
+	
+	<section class="question-counter-area">
+	<p class="question-counter">Question <span class="current-question">N</span> out of <span class="number-of-questions">N</span>.</p>
+	</section>
+
+	<section class="question-area">
+		<p class="question"></p>
+		<ul id="answer-list"></ul>
+
+		<button type="button" id="next-button">Next</button>
+	</section>
+	
+	<section class="correct-answer-counter">
+	<p class="correct-answers"><span class="correct-answer">N</span> out of <span class="number-of-questions">N</span> questions correct!</p>
+	</section>
+
+	<section class="summary">
+		<p class="results">You had <span class="correct">n</span> questions right!</p>
+		<button class="restart-test">Restart Test</button>
+		</section>
+	
+	<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+	<script type="text/javascript" src="app.js"></script> 
+</body>
+</html>
