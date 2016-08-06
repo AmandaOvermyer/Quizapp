@@ -1,6 +1,17 @@
 $(document).ready(function(){
 
 	var currentQuestion = 0;
+	var questionCount = 0;
+	
+	var userScore = {
+	rightCount: 0,
+	wrongCount: 0,
+}
+
+	var updateCounter = function(){
+		questionCount = questionCount + 1;
+		$('.current-question-count').text(questionCount);
+	}
 
 	function nextQuestion(){
 		currentQuestion++;
@@ -10,6 +21,7 @@ $(document).ready(function(){
 		$('.summary').show();
 		$('.question-counter-area').hide();
 		$('.correct-answer-counter').hide();
+		$('.correct').text(userScore.rightCount);
 	}
 	
 	function showQuestion(){
@@ -17,10 +29,11 @@ $(document).ready(function(){
 		$('.correct-answer-counter').show();
 		$('.question-counter-area').show();
 		$('#answer-list').html('');
+		updateCounter();
 		if (questionObj){
 			$('.question').text(questionObj.question);
 			for (i=0; i<questionObj.answers.length; i++){
-				$('#answer-list').append('<li><input type="radio" name="answer">' + questionObj.answers[i]  + '</li>');
+				$('#answer-list').append('<li><input type="radio" name="radio">' + questionObj.answers[i]  + '</li>');
 				$('input[type=radio').prop('checked', '');
 				}	
 		} else {
@@ -30,9 +43,12 @@ $(document).ready(function(){
 		}
 	}
 	function checkA(){
-		var ans = $('input[name="answer"]:checked').val();
-		if(questionObj.rightAnswer == ans){
-			rightCount++;
+		var ans = $('input[name="radio"]:checked').val();
+		if(questions[currentQuestion].answer == ans){
+			userScore.rightCount++;
+		} else {
+			userScore.wrongCount++;
+
 		}
 	}
 	$('.start-button').on('click', function(){
@@ -53,12 +69,6 @@ $(document).ready(function(){
 	}
 
 	$('.restart-test').click(newTest);
-/***** things I need to add: 
- - checkAnswer function to check answer submitted
- - next button (that is submit button) and also triggers next question
- - score keeper
- - question counter
- ******/
 
  var questions = [{
  	question: "'Camera' is actually a latin word meaning:",
