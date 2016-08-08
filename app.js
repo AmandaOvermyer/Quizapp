@@ -1,16 +1,16 @@
 $(document).ready(function(){
 
 	var currentQuestion = 0;
-	var questionCount = 0;
 	
 	var userScore = {
-	rightCount: 0,
-	wrongCount: 0,
-}
+		rightCount: 0,
+		wrongCount: 0,
+	}
 
 	var updateCounter = function(){
-		questionCount = questionCount + 1;
-		$('.current-question-count').text(questionCount);
+		$('.current-question-count').text(currentQuestion + 1);
+		$('.correct-answer').text(userScore.rightCount);
+		$('.number-of-questions').text(questions.length);
 	}
 
 	function nextQuestion(){
@@ -33,9 +33,8 @@ $(document).ready(function(){
 		if (questionObj){
 			$('.question').text(questionObj.question);
 			for (i=0; i<questionObj.answers.length; i++){
-				$('#answer-list').append('<li><input type="radio" name="radio">' + questionObj.answers[i]  + '</li>');
-				$('input[type=radio').prop('checked', '');
-				}	
+				$('#answer-list').append('<li><input type="radio" name="answer" value="' + i + '">' + questionObj.answers[i]  + '</li>');
+			}	
 		} else {
 			showSummary();
 			$('.question-area').hide();
@@ -43,8 +42,8 @@ $(document).ready(function(){
 		}
 	}
 	function checkA(){
-		var ans = $('input[name="radio"]:checked').val();
-		if(questions[currentQuestion].answer == ans){
+		var ans = $('input[name="answer"]:checked').val();
+		if(questions[currentQuestion].rightAnswer == ans){
 			userScore.rightCount++;
 		} else {
 			userScore.wrongCount++;
@@ -59,59 +58,70 @@ $(document).ready(function(){
 
 
 	$('.question-area').on('click', '#next-button', function(){
-		nextQuestion();
-		showQuestion();
-		checkA();
+		if ($('input[name="answer"]:checked').val()){ 
+			checkA();
+			nextQuestion();
+			showQuestion();
+		} else {
+			alert("Please choose an answer");
+		}
+		
+		
 	})
 
 	function newTest(){
-		location.reload();
+		currentQuestion = 0;
+		userScore.rightCount = 0;
+		userScore.wrongCount = 0;
+		showQuestion();
+		$('.question-area').show();
+		$('.summary').hide();
 	}
 
 	$('.restart-test').click(newTest);
 
- var questions = [{
- 	question: "'Camera' is actually a latin word meaning:",
- 	answers: ['Picture Box', 'Room', 'Light Box', 'Opening'],
- 	rightAnswer: 1,
- }, {
- 	question: "What does the acronym DSLR stand for?",
- 	answers: ['Diminished Solar Light Regulator', 'Digital Single Lens Reflux', 'Digital Solar Lens Reflector', 'Digital Scene Light Reflector'],
- 	rightAnswer: 1,
- },{
- 	question: "The amount of light passing through a lens is defined by the:",
- 	answers: ['Shutter Speed', 'ISO', 'Exposure', 'Aperture'],
- 	rightAnswer: 3,
- },{
- 	question: "The balancing of light within a photograph is known as the:",
- 	answers: ['White balance', 'Aperture', 'Exposure', 'Shutter Speed'],
- 	rightAnswer: 2,
- },{
- 	question: "'Photography' comes from the Greek words PHOTO and GRAPHOS. What does it mean?",
- 	answers: ['Light graphics', 'Light writing', 'Light drawing', 'Graphic drawing'],
- 	rightAnswer: 1,
- },{
- 	question: "What is 'bulb mode' on a camera?",
- 	answers: ['A way to use your flash effectively', 'A way to leave your shutter open indefinitely', 'There is no bulb mode', 'A way to put two images into one picture'],
- 	rightAnswer: 1,
- },{
- 	question: "The amount or light or darkness on a photograph is known as the:",
- 	answers: ['Exposure', 'Aperture', 'Shutter speed', 'Contrast'],
- 	rightAnswer: 0,
- },{
- 	question: "Perfect exposure is the result of the right combination of:",
- 	answers: ['Shutter speed + aperture + resolution', 'Film speed + aperture + exposure', 'Exposure + aperture + shutter speed', 'Aperture + shutter speed + film speed'],
- 	rightAnswer: 3,
- },{
- 	question: "What is the angle of view on a fisheye lens?",
- 	answers: ['180 degrees', '225 degrees', '270 degrees', '360 degrees'],
- 	rightAnswer: 0,
- }, {
- 	question: "Which of these is not an editing program?",
- 	answers: ['Lightroom', 'Photoshop', 'Bridge', 'Illustrator'],
- 	rightAnswer: 3,
- }
- ]
+	var questions = [{
+		question: "'Camera' is actually a latin word meaning:",
+		answers: ['Picture Box', 'Room', 'Light Box', 'Opening'],
+		rightAnswer: 1,
+	}, {
+		question: "What does the acronym DSLR stand for?",
+		answers: ['Diminished Solar Light Regulator', 'Digital Single Lens Reflux', 'Digital Solar Lens Reflector', 'Digital Scene Light Reflector'],
+		rightAnswer: 1,
+	},{
+		question: "The amount of light passing through a lens is defined by the:",
+		answers: ['Shutter Speed', 'ISO', 'Exposure', 'Aperture'],
+		rightAnswer: 3,
+	},{
+		question: "The balancing of light within a photograph is known as the:",
+		answers: ['White balance', 'Aperture', 'Exposure', 'Shutter Speed'],
+		rightAnswer: 2,
+	},{
+		question: "'Photography' comes from the Greek words PHOTO and GRAPHOS. What does it mean?",
+		answers: ['Light graphics', 'Light writing', 'Light drawing', 'Graphic drawing'],
+		rightAnswer: 1,
+	},{
+		question: "What is 'bulb mode' on a camera?",
+		answers: ['A way to use your flash effectively', 'A way to leave your shutter open indefinitely', 'There is no bulb mode', 'A way to put two images into one picture'],
+		rightAnswer: 1,
+	},{
+		question: "The amount or light or darkness on a photograph is known as the:",
+		answers: ['Exposure', 'Aperture', 'Shutter speed', 'Contrast'],
+		rightAnswer: 0,
+	},{
+		question: "Perfect exposure is the result of the right combination of:",
+		answers: ['Shutter speed + aperture + resolution', 'Film speed + aperture + exposure', 'Exposure + aperture + shutter speed', 'Aperture + shutter speed + film speed'],
+		rightAnswer: 3,
+	},{
+		question: "What is the angle of view on a fisheye lens?",
+		answers: ['180 degrees', '225 degrees', '270 degrees', '360 degrees'],
+		rightAnswer: 0,
+	}, {
+		question: "Which of these is not an editing program?",
+		answers: ['Lightroom', 'Photoshop', 'Bridge', 'Illustrator'],
+		rightAnswer: 3,
+	}
+	]
 
 })
 
